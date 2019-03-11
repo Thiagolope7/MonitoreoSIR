@@ -1,4 +1,4 @@
-﻿namespace Monitor
+﻿namespace DatosTrafico
 {
     partial class Form1
     {
