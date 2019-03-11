@@ -16,5 +16,13 @@ namespace DatosTrafico
         {
             InitializeComponent();
         }
+
+        private void BtnDT_Click(object sender, EventArgs e)
+        {
+            DatosTrafico DT = new DatosTrafico();
+            DT.Show();
+            this.btnDT.Enabled = false; 
+            
+        }
     }
 }
