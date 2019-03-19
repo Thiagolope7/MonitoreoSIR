@@ -19,6 +19,7 @@ namespace DatosTrafico
     public partial class DatosTrafico : Form
     {
         SqlConnection Conexion;
+        public int Cuenta = 60;
         public DatosTrafico()
         {
             InitializeComponent();
@@ -135,9 +136,19 @@ namespace DatosTrafico
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            CCTV();
-            ARS();
-            FDT();
+            if (Cuenta != 0)
+            {
+                this.label21.Text = Cuenta.ToString();
+                Cuenta -= 1;
+            }
+            else
+            {
+                CCTV();
+                ARS();
+                FDT();
+                Cuenta = 60;
+            }
+            
 
         }
         public void ARS()
@@ -364,7 +375,7 @@ namespace DatosTrafico
 
             }
         }
-        public void DriveDAI()
+        public void DriverDAI()
         {
             FileStream ArchivoTxT = new FileStream("C:/Traza/DriverDAI.txt", FileMode.Append, FileAccess.Write);
             StreamWriter Escribir = new StreamWriter(ArchivoTxT);
@@ -417,7 +428,7 @@ namespace DatosTrafico
         {
           
             timer2.Enabled = true;
-            timer2.Interval = 60000;
+            timer2.Interval = 1000;
             timer2.Start();
             this.btnProcesos.Enabled = false; 
           
@@ -425,9 +436,26 @@ namespace DatosTrafico
 
         private void Timer2_Tick(object sender, EventArgs e)
         {
-    
-            Logger();
-            BdvDAI();
+            if (Cuenta != 0)
+            {
+                this.label19.Text = Cuenta.ToString();
+                Cuenta -= 1;
+            }
+            else
+            {
+                Logger();
+                BdvDAI();
+                DriverDAI();
+                ETD();
+                Cuenta = 60;
+            }
+            
+        }
+
+        private void BtnCerrar_Click(object sender, EventArgs e)
+        {
+   
+
         }
     }
 
