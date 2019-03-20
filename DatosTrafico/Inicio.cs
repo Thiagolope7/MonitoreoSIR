@@ -59,5 +59,13 @@ namespace DatosTrafico
 			DT.Show();
 			this.btnERU.Enabled = false;
 		}
+
+		private void btnERU_Click_1(object sender, EventArgs e)
+		{
+			ERU DT = new ERU();
+			DT.Show();
+			this.btnERU.Enabled = false;
+
+		}
 	}
 }
