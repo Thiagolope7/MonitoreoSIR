@@ -3,13 +3,6 @@
 namespace DatosTrafico
 {
     using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Data;
-    using System.Drawing;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows.Forms;
 
     public partial class Form1 : Form
@@ -53,19 +46,27 @@ namespace DatosTrafico
             Operacion(new Operacion());
         }
 
-		private void btnERU_Click(object sender, EventArgs e)
-		{
-			ERU DT = new ERU();
-			DT.Show();
-			this.btnERU.Enabled = false;
-		}
+        private void ERU(object frmERU)
+        {
+            if (this.panel2.Controls.Count > 0)
+                this.panel2.Controls.RemoveAt(0);
+            ERU ERU = frmERU as ERU;
+            ERU.TopLevel = false;
+            ERU.Dock = DockStyle.Fill;
+            this.panel2.Controls.Add(ERU);
+            this.panel2.Tag = ERU;
+            ERU.Show();
+
+        }
+        private void btnERU_Click(object sender, EventArgs e)
+        {
+            ERU(new ERU());
+        }
 
 		private void btnERU_Click_1(object sender, EventArgs e)
 		{
-			ERU DT = new ERU();
-			DT.Show();
-			this.btnERU.Enabled = false;
+            ERU(new ERU());
 
-		}
+        }
 	}
 }
