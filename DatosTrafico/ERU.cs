@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using System.Windows.Forms.DataVisualization.Charting;
+using System.Threading;
 
 namespace DatosTrafico
 {
@@ -17,9 +18,20 @@ namespace DatosTrafico
 		SqlConnection Conexion;
 		public ERU()
 		{
+			
 			InitializeComponent();
-			ConexionSQL();
-			Datos_act();
+			
+				
+				ConexionSQL();
+			CheckForIllegalCrossThreadCalls = false;
+			ThreadStart delegado = new ThreadStart(Datos_act);
+			// creamos el delegado 
+			Thread hilo = new Thread(delegado);
+			//creamos el hilo
+			hilo.Start();
+
+				
+			
 			
 		}
 
@@ -37,68 +49,88 @@ namespace DatosTrafico
 		}
 		public void Datos_act()
 		{
-			string query = "SELECT fecha,nombre,c_registros FROM Seg_datos_logic";
-			Conexion.Open();
-
-			SqlCommand comando = new SqlCommand(query,Conexion);
-		
-			comando.CommandText = "SELECT fecha,nombre,c_registros FROM Seg_datos_logic";
-			//comando.CommandType = CommandType.Text;
-			//comando.
-			dataGridView1.Rows.Clear();
-			//DataGridViewCellFormattingEventArgs e ;
-
-			//SqlDataAdapter da = new SqlDataAdapter("SELECT fecha,nombre,c_registros FROM Seg_datos_logic",Conexion);
-			SqlDataReader dr = comando.ExecuteReader();
-			int debajo = 0, arriba = 0, normal = 0;
-
-
-			while (dr.Read())
+			
+			while (true)
 			{
-				int renglon = dataGridView1.Rows.Add();
-				dataGridView1.Rows[renglon].Cells[0].Value = dr.GetString(dr.GetOrdinal("nombre"));
-				if (dr.GetInt32(dr.GetOrdinal("c_registros")) <= 54)
+				
+				Series series = new Series( );
+				
+				series=this.chart1.Series.Add("Debajo");
+			
+				series = this.chart1.Series.Add("arriba");
+				
+
+
+				string query = "SELECT fecha,nombre,c_registros FROM Seg_datos_logic";
+				Conexion.Open();
+
+				SqlCommand comando = new SqlCommand(query, Conexion);
+
+				comando.CommandText = "SELECT fecha,nombre,c_registros FROM Seg_datos_logic";
+				//comando.CommandType = CommandType.Text;
+				//comando.
+				dataGridView1.Rows.Clear();
+				//DataGridViewCellFormattingEventArgs e ;
+
+				//SqlDataAdapter da = new SqlDataAdapter("SELECT fecha,nombre,c_registros FROM Seg_datos_logic",Conexion);
+				SqlDataReader dr = comando.ExecuteReader();
+				int debajo = 0, arriba = 0, normal = 0;
+
+
+				while (dr.Read())
 				{
-					debajo++;
-					//this.dataGridView1.Columns[e.ColumnIndex].Name == "c_registros";
+					int renglon = dataGridView1.Rows.Add();
+					dataGridView1.Rows[renglon].Cells[0].Value = dr.GetString(dr.GetOrdinal("nombre"));
+					if (dr.GetInt32(dr.GetOrdinal("c_registros")) <= 54)
+					{
+						debajo++;
+						//this.dataGridView1.Columns[e.ColumnIndex].Name == "c_registros";
 
-					dataGridView1.Rows[renglon].DefaultCellStyle.BackColor = System.Drawing.Color.Red;
-					dataGridView1.Rows[renglon].DefaultCellStyle.ForeColor = System.Drawing.Color.White;
+						//dataGridView1.Rows[renglon].DefaultCellStyle.BackColor = System.Drawing.Color.Red;
+						//dataGridView1.Rows[renglon].DefaultCellStyle.ForeColor = System.Drawing.Color.White;
 
-					//e.CellStyle/Rows[renglon].Cells[0].cel
+						//e.CellStyle/Rows[renglon].Cells[0].cel
+					}
+					else
+					if (dr.GetInt32(dr.GetOrdinal("c_registros")) >= 66)
+					{
+						arriba++;
+						//this.dataGridView1.Columns[e.ColumnIndex].Name == "c_registros";
+
+						dataGridView1.Rows[renglon].DefaultCellStyle.BackColor = System.Drawing.Color.Blue;
+						dataGridView1.Rows[renglon].DefaultCellStyle.ForeColor = System.Drawing.Color.White;
+
+						//e.CellStyle/Rows[renglon].Cells[0].cel
+					}
+					else
+					{
+						normal++;
+					}
+
+
+					dataGridView1.Rows[renglon].Cells[1].Value = dr.GetInt32(dr.GetOrdinal("c_registros")).ToString();
 				}
-				else
-				if (dr.GetInt32(dr.GetOrdinal("c_registros")) >= 66)
-				{
-					arriba++;
-					//this.dataGridView1.Columns[e.ColumnIndex].Name == "c_registros";
-
-					dataGridView1.Rows[renglon].DefaultCellStyle.BackColor = System.Drawing.Color.Blue;
-					dataGridView1.Rows[renglon].DefaultCellStyle.ForeColor = System.Drawing.Color.White;
-
-					//e.CellStyle/Rows[renglon].Cells[0].cel
-				}
-				else {
-					normal++;
-				}
+				//Series series = this.chart1.Series.Add("Debajo");
+				series.Points.Add(debajo);
+				
+				series.Points.Add(arriba);
 
 
-				dataGridView1.Rows[renglon].Cells[1].Value = dr.GetInt32(dr.GetOrdinal("c_registros")).ToString();
+				Conexion.Close();
+				System.Threading.Thread.Sleep(3600000);
+				this.chart1.Series.Clear();
+				
+
+				//DataSet ds = new DataSet();
+				//da.Fill(ds);
+				//while (da.)
+				//dataGridView1.Item
 			}
-			Series series = this.chart1.Series.Add("Debajo");
-			series.Points.Add(debajo);
-			series = this.chart1.Series.Add("normal");
-			series.Points.Add(normal);
-			series = this.chart1.Series.Add("arriba");
-			series.Points.Add(arriba);
+			}
 
+		private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+		{
 
-			Conexion.Close();
-			//DataSet ds = new DataSet();
-			//da.Fill(ds);
-			//while (da.)
-			//dataGridView1.Item
 		}
-
 	}
 }
