@@ -7,21 +7,38 @@ namespace DatosTrafico
 
     public partial class Form1 : Form
     {
+		public static int dat = 0;
+		
         public Form1()
         {
             InitializeComponent();
         }
-        private void DatosTrafico(object frmDT)
-        {
-            if (this.panel2.Controls.Count > 0)
-                this.panel2.Controls.RemoveAt(0);
-            DatosTrafico DT = frmDT as DatosTrafico;
-            DT.TopLevel = false;
-            DT.Dock = DockStyle.Fill;
-            this.panel2.Controls.Add(DT);
-            this.panel2.Tag = DT;
-            DT.Show();
+		DatosTrafico DT1 = new DatosTrafico();
+		Operacion Op = new Operacion();
+		ERU ERU1 = new ERU();
 
+
+		public void Llamar()
+		{
+			
+			
+		}
+        private void DatosTrafico(object frmDT)
+			
+        {
+			dat++;
+
+			if (this.panel2.Controls.Count > 0)
+                this.panel2.Controls.RemoveAt(0);
+			
+				DT1.TopLevel = false;
+				DT1.Dock = DockStyle.Fill;
+				DT1.Show();
+				this.panel2.Controls.Add(DT1);
+				this.panel2.Tag = DT1;
+				this.panel2.Show();
+					
+		
         }
         private void BtnDT_Click(object sender, EventArgs e)
         {
@@ -32,14 +49,14 @@ namespace DatosTrafico
         {
             if (this.panel2.Controls.Count > 0)
                 this.panel2.Controls.RemoveAt(0);
-            Operacion Op = frmOp as Operacion;
             Op.TopLevel = false;
             Op.Dock = DockStyle.Fill;
             this.panel2.Controls.Add(Op);
             this.panel2.Tag = Op;
             Op.Show();
+			this.panel2.Show();
 
-        }
+		}
 
         private void BtnOperacion_Click(object sender, EventArgs e)
         {
@@ -50,14 +67,14 @@ namespace DatosTrafico
         {
             if (this.panel2.Controls.Count > 0)
                 this.panel2.Controls.RemoveAt(0);
-            ERU ERU = frmERU as ERU;
-            ERU.TopLevel = false;
-            ERU.Dock = DockStyle.Fill;
-            this.panel2.Controls.Add(ERU);
-            this.panel2.Tag = ERU;
-            ERU.Show();
-
-        }
+           
+            ERU1.TopLevel = false;
+            ERU1.Dock = DockStyle.Fill;
+            this.panel2.Controls.Add(ERU1);
+            this.panel2.Tag = ERU1;
+            ERU1.Show();
+			this.panel2.Show();
+		}
         private void btnERU_Click(object sender, EventArgs e)
         {
             ERU(new ERU());
