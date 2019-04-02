@@ -73,6 +73,7 @@
             // 
             // btnOperacion
             // 
+            this.btnOperacion.AutoSize = true;
             this.btnOperacion.FlatAppearance.BorderColor = System.Drawing.Color.Fuchsia;
             this.btnOperacion.FlatAppearance.BorderSize = 10;
             this.btnOperacion.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -86,12 +87,14 @@
             // 
             // btnDT
             // 
+            this.btnDT.AutoEllipsis = true;
+            this.btnDT.AutoSize = true;
             this.btnDT.FlatAppearance.BorderColor = System.Drawing.Color.Fuchsia;
             this.btnDT.FlatAppearance.BorderSize = 10;
             this.btnDT.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDT.Location = new System.Drawing.Point(12, 48);
             this.btnDT.Name = "btnDT";
-            this.btnDT.Size = new System.Drawing.Size(114, 29);
+            this.btnDT.Size = new System.Drawing.Size(111, 29);
             this.btnDT.TabIndex = 0;
             this.btnDT.Text = "Datos tráfico";
             this.btnDT.UseVisualStyleBackColor = true;
@@ -109,14 +112,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DarkGray;
             this.ClientSize = new System.Drawing.Size(774, 442);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "HADES";
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 

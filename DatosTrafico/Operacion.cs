@@ -21,10 +21,23 @@ namespace DatosTrafico
     {
         public static int CountVAL = 0;
         public static int counLeer = 0;
-        SqlConnection cn;
+        public int Cuenta = 60;
+        SqlConnection Conexion;
         public Operacion()
         {
             InitializeComponent();
+        }
+        public void ConexionSQL()
+        {
+            try
+            {
+                Conexion = new SqlConnection("Data Source=10.158.64.91;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True;User ID=indra;Password=0f120400DdBblog");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("No se conecto con la base de datos:" + ex.ToString());
+            }
+            return;
         }
 
         static void Mail(string Mensaje)
@@ -120,7 +133,7 @@ namespace DatosTrafico
         }
         public void Bdv_Logistica()
         {
-            string path = "C:/EstadosLOG/Logistica/PRUEBA.txt";
+            string path = "C:/Traza/EstadosLOG/Logistica.txt";
             if (File.Exists(path))
             {
                 File.Delete(path);
@@ -130,7 +143,7 @@ namespace DatosTrafico
             {
                 foreach (ManagementObject mo in mos.Get())
                 {
-                    FileStream ArchivoTxT = new FileStream("C:/Traza/ES_CPROG.txt", FileMode.Append, FileAccess.Write);
+                    FileStream ArchivoTxT = new FileStream("C:/Traza/EstadosLOG/Logistica.txt", FileMode.Append, FileAccess.Write);
                     StreamWriter Escribir = new StreamWriter(ArchivoTxT);
                     Escribir.Write(mo["CommandLine"]);
                     Escribir.WriteLine();
@@ -139,7 +152,7 @@ namespace DatosTrafico
                     Console.WriteLine(mo["CommandLine"]);
                 }
             }
-            StreamReader objReader = new StreamReader("C:/Traza/ES_CPROG.txt");
+            StreamReader objReader = new StreamReader("C:/Traza/EstadosLOG/Logistica.txt");
             string sLine;
             ArrayList arrLOG = new ArrayList();
             while (!objReader.EndOfStream)
@@ -182,7 +195,7 @@ namespace DatosTrafico
             else
             {
                 this.label5.Visible = true;
-                this.label5.Text = "Stoped";
+                this.label5.Text = "Stopped";
                 this.label5.BackColor = Color.Red;
                 FileStream ArchivoTxT = new FileStream("C:/Traza/Logistica.txt", FileMode.Append, FileAccess.Write);
                 StreamWriter Escr = new StreamWriter(ArchivoTxT);
@@ -190,10 +203,12 @@ namespace DatosTrafico
                 Escr.WriteLine();
                 Escr.Flush();
                 Escr.Close();
-                //timer1.Stop();
+                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                Mail(Mensaje);
+                timer2.Stop();
                 try
                 {
-                    FileStream Auto = new FileStream("C:/EstadosLOG/Bdv_Logistica.txt", FileMode.Append, FileAccess.Write);
+                    FileStream Auto = new FileStream("C:/Traza/EstadosLOG/Logistica.txt", FileMode.Append, FileAccess.Write);
                     StreamWriter auto = new StreamWriter(Auto);
                     DateTime Ahora = DateTime.Now;
                     string AhoraString = Ahora.ToString("yyyyMMddHHmmss");
@@ -207,8 +222,8 @@ namespace DatosTrafico
                         auto.Flush();
                     }
                     auto.Close();
-                    cn.Open();
-                    SqlCommand comando = new SqlCommand("select tvpee.EL_GEN_EXT_CODIGO, tvpee.VAL_PARAMETRO_ENT from TUN_ELEMENTO_GENERICO as teg join TUN_ELEMENTO_GENERICO_EXTERNO as tege on teg.ELEM_GEN_CODIGO = tege.ELEM_GEN_CODIGO and teg.TIP_EQUIP_CODIGO = tege.TIP_EQUIP_CODIGO join TUN_VALOR_PARAM_EQ_EXTERNO as tvpee on tvpee.EL_GEN_EXT_CODIGO = tege.EL_GEN_EXT_CODIGO and teg.TIP_EQUIP_CODIGO = tvpee.TIP_EQUIP_CODIGO and tvpee.PARAM_CODIGO = 14 where teg.TIP_EQUIP_CODIGO = 1009 and teg.ELEM_GEN_ACTIVO = 1 order by teg.ELEM_GEN_CODIGO", cn);
+                    Conexion.Open();
+                    SqlCommand comando = new SqlCommand("select tvpee.EL_GEN_EXT_CODIGO, tvpee.VAL_PARAMETRO_ENT from TUN_ELEMENTO_GENERICO as teg join TUN_ELEMENTO_GENERICO_EXTERNO as tege on teg.ELEM_GEN_CODIGO = tege.ELEM_GEN_CODIGO and teg.TIP_EQUIP_CODIGO = tege.TIP_EQUIP_CODIGO join TUN_VALOR_PARAM_EQ_EXTERNO as tvpee on tvpee.EL_GEN_EXT_CODIGO = tege.EL_GEN_EXT_CODIGO and teg.TIP_EQUIP_CODIGO = tvpee.TIP_EQUIP_CODIGO and tvpee.PARAM_CODIGO = 14 where teg.TIP_EQUIP_CODIGO = 1009 and teg.ELEM_GEN_ACTIVO = 1 order by teg.ELEM_GEN_CODIGO",Conexion);
                     SqlDataReader leer;
                     leer = comando.ExecuteReader();
 
@@ -225,8 +240,7 @@ namespace DatosTrafico
                     }
                     Ensayar.Close();
                     MessageBox.Show("Se ha guardado estado actual de los agentes", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //this.label8.Text = counLeer.ToString();
-                    cn.Close();
+                    Conexion.Close();
                     this.btnUpdate.Enabled = true;
                 }
 
@@ -238,7 +252,316 @@ namespace DatosTrafico
             }
         }
 
+        public void FDT()
+        {
+            FileStream ArchivoTxT = new FileStream("C:/Traza/FDT.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+            StreamReader objReader = new StreamReader("C:/Traza/EstadosLOG/Logistica.txt");
+            string sLine;
+            ArrayList arrLOG = new ArrayList();
+            while (!objReader.EndOfStream)
+            {
+                sLine = objReader.ReadLine();
+                if (!string.IsNullOrWhiteSpace(sLine))
+                    arrLOG.Add(sLine);
+            }
+            for (int i = 0; i < arrLOG.Count; i++)
+            {
 
+                string a = @"C:\AreaTrafico\Proyectos\Medellin\bin\Bdv_ES_CProg-Final.exe SIGA\COLOMBIA\BDV_ES_FOTODET";
+                string b = arrLOG[i].ToString();
+                if (a == b)
+                {
+                    CountVAL = CountVAL + 1;
+                  
+                    break;
+
+                }
+            }
+            objReader.Close();
+            if (CountVAL == 1)
+            {
+                this.label6.Visible = true;
+                this.label6.Text = "Running";
+                this.label6.BackColor = Color.Green;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta corriendo");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                return;
+            }
+            else if(CountVAL > 1)
+            {
+                this.label6.Visible = true;
+                this.label6.Text = "Duplicated";
+                this.label6.BackColor = Color.Yellow;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta duplicado");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
+                Mail(Mensaje);
+                return;
+            }
+            else if(CountVAL == 0)
+            {
+                this.label6.Visible = true;
+                this.label6.Text = "Stopped";
+                this.label6.BackColor = Color.Red;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta detenido");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                Mail(Mensaje);
+                return;
+            }
+        }
+        public void AVL()
+        {
+            FileStream ArchivoTxT = new FileStream("C:/Traza/AVL.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+            StreamReader objReader = new StreamReader("C:/Traza/EstadosLOG/Logistica.txt");
+            string sLine;
+            ArrayList arrLOG = new ArrayList();
+            while (!objReader.EndOfStream)
+            {
+                sLine = objReader.ReadLine();
+                if (!string.IsNullOrWhiteSpace(sLine))
+                    arrLOG.Add(sLine);
+            }
+            for (int i = 0; i < arrLOG.Count; i++)
+            {
+
+                string a = @"C:\AreaTrafico\Proyectos\Medellin\bin\Bdv_ES_CProg-Final.exe SIGA\COLOMBIA\BDV_ES_AVL";
+                string b = arrLOG[i].ToString();
+                if (a == b)
+                {
+                    CountVAL = CountVAL + 1;
+
+                    break;
+
+                }
+            }
+            objReader.Close();
+            if (CountVAL == 1)
+            {
+                this.label7.Visible = true;
+                this.label7.Text = "Running";
+                this.label7.BackColor = Color.Green;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta corriendo");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                return;
+            }
+            else if (CountVAL > 1)
+            {
+                this.label7.Visible = true;
+                this.label7.Text = "Duplicated";
+                this.label7.BackColor = Color.Yellow;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta duplicado");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
+                Mail(Mensaje);
+                return;
+            }
+            else if (CountVAL == 0)
+            {
+                this.label7.Visible = true;
+                this.label7.Text = "Stopped";
+                this.label7.BackColor = Color.Red;
+                Escribir.Write(DateTime.Now + ",El proceso Bdv_Fotodetección esta detenido");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                CountVAL = 0;
+                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                Mail(Mensaje);
+                return;
+            }
+        }
+
+        public void PMV()
+        {
+            FileStream ArchivoTxT = new FileStream("C:/Traza/PMV.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+            string Proceso = "BDVIntegNTCIP-Final";
+            Process[] PMV = Process.GetProcessesByName(Proceso);
+            if (PMV.Length == 1)
+            {
+                Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta corriendo");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                this.label9.Visible = true;
+                this.label9.Text = "Running";
+                this.label9.BackColor = Color.Green;
+            }
+            else
+            {
+                if (PMV.Length == 0)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta detenido");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV PMV se encuentra detenida a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label9.Visible = true;
+                    this.label9.Text = "Stopped";
+                    this.label9.BackColor = Color.Red;
+                }
+                if (PMV.Length > 1)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta más de una vez");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV PMV se encuentra duplicada a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label9.Visible = true;
+                    this.label9.Text = "Duplicated";
+                    this.label9.BackColor = Color.Yellow;
+                }
+                return;
+            }
+        }
+
+        public void MTV()
+        {
+            FileStream ArchivoTxT = new FileStream("C:/Traza/MTV.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+            string Proceso = "BDVMATRIZ_Final";
+            Process[] MTV = Process.GetProcessesByName(Proceso);
+            if (MTV.Length == 1)
+            {
+                Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta corriendo");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                this.label11.Visible = true;
+                this.label11.Text = "Running";
+                this.label11.BackColor = Color.Green;
+            }
+            else
+            {
+                if (MTV.Length == 0)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta detenido");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label11.Visible = true;
+                    this.label11.Text = "Stopped";
+                    this.label11.BackColor = Color.Red;
+                }
+                if (MTV.Length > 1)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta más de una vez");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label11.Visible = true;
+                    this.label11.Text = "Duplicated";
+                    this.label11.BackColor = Color.Yellow;
+                }
+                return;
+            }
+        }
+
+        public void JMS()
+        {
+            FileStream ArchivoTxT = new FileStream("C:/Traza/JMS.txt", FileMode.Append, FileAccess.Write);
+            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+            string Proceso = "InterfazIntegracionesJMS-Final";
+            Process[] JMS = Process.GetProcessesByName(Proceso);
+            if (JMS.Length == 1)
+            {
+                Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta corriendo");
+                Escribir.WriteLine();
+                Escribir.Flush();
+                Escribir.Close();
+                this.label13.Visible = true;
+                this.label13.Text = "Running";
+                this.label13.BackColor = Color.Green;
+            }
+            else
+            {
+                if (JMS.Length == 0)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta detenido");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label13.Visible = true;
+                    this.label13.Text = "Stopped";
+                    this.label13.BackColor = Color.Red;
+                }
+                if (JMS.Length > 1)
+                {
+                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta más de una vez");
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
+                    Mail(Mensaje);
+                    this.label13.Visible = true;
+                    this.label13.Text = "Duplicated";
+                    this.label13.BackColor = Color.Yellow;
+                }
+                return;
+            }
+        }
+
+        private void BtnStart_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+            timer1.Interval = 1000;
+            timer1.Start();
+            timer2.Enabled = true;
+            timer2.Interval = 1000;
+            timer2.Start();
+            this.btnStart.Enabled = false;
+            this.btnStart.Enabled = false;
+
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            if (Cuenta != 0)
+            {
+                this.label21.Text = Cuenta.ToString();
+                Cuenta -= 1;
+            }
+            else
+            {
+                Kernel();  
+                AVL();
+                FDT();
+                PMV();
+                MTV();
+                Cuenta = 60;
+            }
+        }
+
+        private void Timer2_Tick(object sender, EventArgs e)
+        {
+            Bdv_Logistica();
+        }
     }
 }
 

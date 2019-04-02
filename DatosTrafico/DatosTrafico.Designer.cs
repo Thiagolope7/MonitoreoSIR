@@ -281,6 +281,7 @@
             // 
             // label15
             // 
+            this.label15.AutoEllipsis = true;
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(3, 23);
