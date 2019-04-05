@@ -55,9 +55,7 @@ namespace DatosTrafico
 				
 				Series series = new Series( );
 				
-				series=this.chart1.Series.Add("Debajo");
-			
-				series = this.chart1.Series.Add("arriba");
+				
 				
 
 
@@ -111,8 +109,9 @@ namespace DatosTrafico
 					dataGridView1.Rows[renglon].Cells[1].Value = dr.GetInt32(dr.GetOrdinal("c_registros")).ToString();
 				}
 				//Series series = this.chart1.Series.Add("Debajo");
+				series = this.chart1.Series.Add("Debajo");
 				series.Points.Add(debajo);
-				
+				series = this.chart1.Series.Add("arriba");
 				series.Points.Add(arriba);
 
 
