@@ -144,7 +144,7 @@
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)), true);
             this.btnStart.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnStart.Location = new System.Drawing.Point(72, 343);
+            this.btnStart.Location = new System.Drawing.Point(75, 343);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 6;
@@ -209,7 +209,7 @@
             this.label10.AutoSize = true;
             this.label10.BackColor = System.Drawing.Color.LimeGreen;
             this.label10.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(522, 99);
+            this.label10.Location = new System.Drawing.Point(523, 99);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(60, 19);
             this.label10.TabIndex = 12;
@@ -382,7 +382,7 @@
             this.btnCerrar.Name = "btnCerrar";
             this.btnCerrar.Size = new System.Drawing.Size(75, 23);
             this.btnCerrar.TabIndex = 24;
-            this.btnCerrar.Text = "Cerrar";
+            this.btnCerrar.Text = "Pausar";
             this.btnCerrar.UseVisualStyleBackColor = true;
             this.btnCerrar.Click += new System.EventHandler(this.BtnCerrar_Click);
             // 

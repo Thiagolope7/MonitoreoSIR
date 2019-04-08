@@ -454,7 +454,10 @@ namespace DatosTrafico
 
         private void BtnCerrar_Click(object sender, EventArgs e)
         {
-   
+            timer1.Stop();
+            timer2.Stop();
+            this.btnStart.Enabled = true;
+            this.btnProcesos.Enabled = true;
 
         }
     }

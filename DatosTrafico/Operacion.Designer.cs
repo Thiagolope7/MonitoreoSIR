@@ -32,7 +32,7 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.btnCerrar = new System.Windows.Forms.Button();
+            this.btnPausar = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
@@ -90,20 +90,21 @@
             this.label14.Text = "- En, SQL verificamos cada minuto que se encuentre datos en la tabla de 1 minuto." +
     "";
             // 
-            // btnCerrar
+            // btnPausar
             // 
-            this.btnCerrar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
-            this.btnCerrar.FlatAppearance.BorderSize = 10;
-            this.btnCerrar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.btnCerrar.FlatStyle = System.Windows.Forms.FlatStyle.System;
-            this.btnCerrar.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)), true);
-            this.btnCerrar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnCerrar.Location = new System.Drawing.Point(395, 368);
-            this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(75, 23);
-            this.btnCerrar.TabIndex = 47;
-            this.btnCerrar.Text = "Cerrar";
-            this.btnCerrar.UseVisualStyleBackColor = true;
+            this.btnPausar.FlatAppearance.BorderColor = System.Drawing.Color.Black;
+            this.btnPausar.FlatAppearance.BorderSize = 10;
+            this.btnPausar.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            this.btnPausar.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.btnPausar.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)), true);
+            this.btnPausar.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPausar.Location = new System.Drawing.Point(531, 368);
+            this.btnPausar.Name = "btnPausar";
+            this.btnPausar.Size = new System.Drawing.Size(75, 23);
+            this.btnPausar.TabIndex = 47;
+            this.btnPausar.Text = "Pausar";
+            this.btnPausar.UseVisualStyleBackColor = true;
+            this.btnPausar.Click += new System.EventHandler(this.BtnPausar_Click);
             // 
             // label21
             // 
@@ -111,7 +112,7 @@
             this.label21.BackColor = System.Drawing.Color.DarkGray;
             this.label21.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label21.Location = new System.Drawing.Point(429, 322);
+            this.label21.Location = new System.Drawing.Point(376, 322);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(18, 19);
             this.label21.TabIndex = 46;
@@ -123,7 +124,7 @@
             this.label20.BackColor = System.Drawing.Color.DarkGray;
             this.label20.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label20.Location = new System.Drawing.Point(231, 322);
+            this.label20.Location = new System.Drawing.Point(200, 322);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(170, 19);
             this.label20.TabIndex = 45;
@@ -147,7 +148,7 @@
             this.btnStart.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.btnStart.Font = new System.Drawing.Font("Bahnschrift", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)), true);
             this.btnStart.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnStart.Location = new System.Drawing.Point(175, 368);
+            this.btnStart.Location = new System.Drawing.Point(263, 358);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(75, 23);
             this.btnStart.TabIndex = 31;
@@ -362,7 +363,7 @@
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.btnUpdate);
-            this.Controls.Add(this.btnCerrar);
+            this.Controls.Add(this.btnPausar);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label17);
@@ -389,7 +390,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Button btnCerrar;
+        private System.Windows.Forms.Button btnPausar;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label17;

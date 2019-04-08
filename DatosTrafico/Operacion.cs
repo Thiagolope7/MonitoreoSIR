@@ -536,12 +536,12 @@ namespace DatosTrafico
             timer2.Interval = 1000;
             timer2.Start();
             this.btnStart.Enabled = false;
-            this.btnStart.Enabled = false;
 
         }
 
         private void Timer1_Tick(object sender, EventArgs e)
         {
+         
             if (Cuenta != 0)
             {
                 this.label21.Text = Cuenta.ToString();
@@ -554,6 +554,7 @@ namespace DatosTrafico
                 FDT();
                 PMV();
                 MTV();
+                JMS();
                 Cuenta = 60;
             }
         }
@@ -561,6 +562,13 @@ namespace DatosTrafico
         private void Timer2_Tick(object sender, EventArgs e)
         {
             Bdv_Logistica();
+        }
+
+        private void BtnPausar_Click(object sender, EventArgs e)
+        {
+            timer1.Stop();
+            timer2.Stop();
+            this.btnStart.Enabled = true;
         }
     }
 }
