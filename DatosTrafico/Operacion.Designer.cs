@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.btnPausar = new System.Windows.Forms.Button();
             this.label21 = new System.Windows.Forms.Label();
@@ -62,7 +61,6 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Gainsboro;
-            this.panel2.Controls.Add(this.label15);
             this.panel2.Controls.Add(this.label14);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
@@ -70,27 +68,15 @@
             this.panel2.Size = new System.Drawing.Size(618, 48);
             this.panel2.TabIndex = 18;
             // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(3, 23);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(598, 18);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "- En Bdv se encuentran las encargadas de escribir en SQL, verificamos su funciona" +
-    "miento.";
-            // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(3, 4);
+            this.label14.Location = new System.Drawing.Point(3, 14);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(538, 18);
+            this.label14.Size = new System.Drawing.Size(508, 18);
             this.label14.TabIndex = 0;
-            this.label14.Text = "- En, SQL verificamos cada minuto que se encuentre datos en la tabla de 1 minuto." +
-    "";
+            this.label14.Text = "- Se verifica si los procesos se encuentran corriendo, detenidos o duplicadas";
             // 
             // btnPausar
             // 
@@ -412,7 +398,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Button btnPausar;
         private System.Windows.Forms.Label label21;
