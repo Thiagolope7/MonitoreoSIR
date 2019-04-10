@@ -22,6 +22,10 @@ namespace DatosTrafico
         public static int CountVAL = 0;
         public static int counLeer = 0;
         public int Cuenta = 60;
+        public static int CountUpdate = 0;
+        public static int countPB = 0;
+        public static int ejecucciones = 0;
+
         SqlConnection Conexion;
         public Operacion()
         {
@@ -31,7 +35,7 @@ namespace DatosTrafico
         {
             try
             {
-                Conexion = new SqlConnection("Data Source=10.158.64.91;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True;User ID=indra;Password=0f120400DdBblog");
+                Conexion = new SqlConnection("Data Source=10.5.3.58;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True;User ID=indra;Password=0f120400DdBblog");
             }
             catch (Exception ex)
             {
@@ -251,6 +255,100 @@ namespace DatosTrafico
 
             }
         }
+        public void Main()
+        {
+            using (ManagementObjectSearcher mos = new ManagementObjectSearcher(
+          "SELECT CommandLine FROM Win32_Process WHERE name = 'Bdv_ES_CProg-Final.exe' "))
+            {
+                foreach (ManagementObject mo in mos.Get())
+                {
+                    FileStream ArchivoTxT = new FileStream("C:/Traza/EstadosLOG/Logistica.txt", FileMode.Append, FileAccess.Write);
+                    StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+                    Escribir.Write(mo["CommandLine"]);
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
+                    Console.WriteLine(mo["CommandLine"]);
+                }
+                StreamReader objReader = new StreamReader("C:/Traza/EstadosLOG/Logistica.txt");
+                string sLine = "";
+                ArrayList arrLOG = new ArrayList();
+                while (sLine != null)
+                {
+                    sLine = objReader.ReadLine();
+                    if (sLine != null)
+                        arrLOG.Add(sLine);
+                }
+                objReader.Close();
+                for (int i = 0; i < arrLOG.Count; i++)
+                {
+                    string a = @"C:\AreaTrafico\Proyectos\Medellin\bin\Bdv_ES_CProg-Final.exe  SIGA\COLOMBIA\BDV_ES_LOGIST";
+                    string b = arrLOG[i].ToString();
+                    if (a == b)
+                    {
+                        CountUpdate = CountUpdate + 1;
+                        break;
+                    }
+                }
+                if (CountUpdate != 0)
+                {
+
+                    FileStream Escrbir = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParAgente.txt", FileMode.Append, FileAccess.Write);
+                    StreamWriter Escriba = new StreamWriter(Escrbir);
+                    FileStream Escr = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParEstado.txt", FileMode.Append, FileAccess.Write);
+                    StreamWriter Escri = new StreamWriter(Escr);
+                    FileStream Esayar = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParUpdate.txt", FileMode.Append, FileAccess.Write);
+                    StreamWriter Ensayar = new StreamWriter(Esayar);
+                    string[] rows = File.ReadAllLines(@"C:/Traza/EstadosLOG/Automatico/El_GEN+Val_Par.txt", Encoding.Default);
+                    var dt = new DataTable();
+                    dt.Columns.Add("Col1", typeof(string));
+                    dt.Columns.Add("Col2", typeof(string));
+                    Conexion.Open();
+                    string sqlUpdate = "";
+                    progressBar1.Maximum = rows.Length;
+                    for (int e = 0; e < /*rows.GetLength(0) - e*/rows.Length; e++)
+                    {
+                        DataRow dr = dt.NewRow();
+                        dr["Col1"] = rows[e].Split(';')[0];
+                        dr["Col2"] = rows[e].Split(';')[1];
+                        Escriba.Write(dr["Col1"].ToString());
+                        Escri.Write(dr["Col2"].ToString());
+                        Escriba.WriteLine();
+                        Escri.WriteLine();
+                        Escriba.Flush();
+                        Escri.Flush();
+                        sqlUpdate = "update TUN_VALOR_PARAM_EQ_EXTERNO set VAL_PARAMETRO_ENT =" + dr["Col2"].ToString() + " where TIP_EQUIP_CODIGO = 1009 and PARAM_CODIGO = 14 and EL_GEN_EXT_CODIGO = '" + dr["Col1"].ToString() + "'";
+                        //SqlCommand cmd = new SqlCommand(sqlUpdate, Conexion);
+                        //cmd.ExecuteNonQuery();
+                        Ensayar.Write(sqlUpdate.ToString());
+                        Ensayar.WriteLine();
+                        Ensayar.Flush();
+                        dt.Rows.Add(dr);
+                        progressBar1.Value += 1;
+                        ejecucciones = ejecucciones + 1;
+                    }
+                    Escri.Close();
+                    Escriba.Close();
+                    Ensayar.Close();
+                    Conexion.Close();
+                    CountUpdate = 0;
+                    this.btnUpdate.Enabled = false;
+       
+                    this.label18.Text = "Se procesaron " + rows.Length + " registros";
+                    
+                    MessageBox.Show("Registros actualizados");
+                }
+                else
+                {
+                    MessageBox.Show("Recuerda primero restablecer el proceso de la Bdv de logística");
+                    this.btnUpdate.Enabled = true;
+                    
+                }
+            }
+
+        }
+
+
 
         public void FDT()
         {
@@ -569,6 +667,12 @@ namespace DatosTrafico
             timer1.Stop();
             timer2.Stop();
             this.btnStart.Enabled = true;
+        }
+
+        private void BtnUpdate_Click(object sender, EventArgs e)
+        {
+            Main();
+            this.btnUpdate.Enabled = true; 
         }
     }
 }
