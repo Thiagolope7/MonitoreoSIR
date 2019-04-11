@@ -318,8 +318,8 @@ namespace DatosTrafico
                         Escriba.Flush();
                         Escri.Flush();
                         sqlUpdate = "update TUN_VALOR_PARAM_EQ_EXTERNO set VAL_PARAMETRO_ENT =" + dr["Col2"].ToString() + " where TIP_EQUIP_CODIGO = 1009 and PARAM_CODIGO = 14 and EL_GEN_EXT_CODIGO = '" + dr["Col1"].ToString() + "'";
-                        //SqlCommand cmd = new SqlCommand(sqlUpdate, Conexion);
-                        //cmd.ExecuteNonQuery();
+                        SqlCommand cmd = new SqlCommand(sqlUpdate, Conexion);
+                        cmd.ExecuteNonQuery();
                         Ensayar.Write(sqlUpdate.ToString());
                         Ensayar.WriteLine();
                         Ensayar.Flush();
@@ -665,8 +665,8 @@ namespace DatosTrafico
             }
             else
             {
-                Logis_PRUEBAS();
-                // Bdv_Logistica();
+                
+                Bdv_Logistica();
             }
         }
 
@@ -679,107 +679,13 @@ namespace DatosTrafico
 
         private void BtnUpdate_Click(object sender, EventArgs e)
         {
-            //  Main();
-            update_PRU();
+            Main();
+          
             this.btnUpdate.Enabled = false;
         }
-        public void Logis_PRUEBAS()
-        {
-            FileStream ArchivoTxT = new FileStream("C:/Traza/LOGIS_PRU.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter Escribir = new StreamWriter(ArchivoTxT);
-            string Proceso = "Bdv_ES_LOGIST";
-            Process[] Logistica = Process.GetProcessesByName(Proceso);
-            if (Logistica.Length == 1)
-            {
-                Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta corriendo");
-                Escribir.WriteLine();
-                Escribir.Flush();
-                Escribir.Close();
-                this.label4.Visible = true;
-                this.label4.Text = "Running";
-                this.label4.BackColor = Color.Green;
-            }
-            else
-            {
-                if (Logistica.Length == 0)
-                {
-
-
-
-
-                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta detenido");
-                    Escribir.WriteLine();
-                    Escribir.Flush();
-                    Escribir.Close();
-                  //  string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
-                    //Mail(Mensaje);
-                    this.label4.Visible = true;
-                    this.label4.Text = "Stopped";
-                    this.label4.BackColor = Color.Red;
-                    this.btnUpdate.Enabled = true;
-                }
-                if (Logistica.Length > 1)
-                {
-                    Escribir.Write(DateTime.Now + ",El proceso " + Proceso + " esta más de una vez");
-                    Escribir.WriteLine();
-                    Escribir.Flush();
-                    Escribir.Close();
-                  //  string Mensaje = "La BDV Kernel se encuentra duplicada a esta hora -> ";
-                    //Mail(Mensaje);
-                    this.label4.Visible = true;
-                    this.label4.Text = "Duplicated";
-                    this.label4.BackColor = Color.Yellow;
-                }
-                return;
-            }
-        }
-        public void update_PRU()
-        {
-            FileStream Escrbir = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParAgente.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter Escriba = new StreamWriter(Escrbir);
-            FileStream Escr = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParEstado.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter Escri = new StreamWriter(Escr);
-            FileStream Esayar = new FileStream("C:/Traza/EstadosLOG/Automatico/El_GEN+Val_ParUpdate.txt", FileMode.Append, FileAccess.Write);
-            StreamWriter Ensayar = new StreamWriter(Esayar);
-            string[] rows = File.ReadAllLines(@"C:/Traza/EstadosLOG/Automatico/El_GEN+Val_Par.txt", Encoding.Default);
-            var dt = new DataTable();
-            dt.Columns.Add("Col1", typeof(string));
-            dt.Columns.Add("Col2", typeof(string));
-            Conexion.Open();
-            string sqlUpdate = "";
-            progressBar1.Maximum = rows.Length;
-            for (int e = 0; e < /*rows.GetLength(0) - e*/rows.Length; e++)
-            {
-                DataRow dr = dt.NewRow();
-                dr["Col1"] = rows[e].Split(';')[0];
-                dr["Col2"] = rows[e].Split(';')[1];
-                Escriba.Write(dr["Col1"].ToString());
-                Escri.Write(dr["Col2"].ToString());
-                Escriba.WriteLine();
-                Escri.WriteLine();
-                Escriba.Flush();
-                Escri.Flush();
-                sqlUpdate = "update TUN_VALOR_PARAM_EQ_EXTERNO set VAL_PARAMETRO_ENT =" + dr["Col2"].ToString() + " where TIP_EQUIP_CODIGO = 1009 and PARAM_CODIGO = 14 and EL_GEN_EXT_CODIGO = '" + dr["Col1"].ToString() + "'";
-                //SqlCommand cmd = new SqlCommand(sqlUpdate, Conexion);
-                //cmd.ExecuteNonQuery();
-                Ensayar.Write(sqlUpdate.ToString());
-                Ensayar.WriteLine();
-                Ensayar.Flush();
-                dt.Rows.Add(dr);
-                progressBar1.Value += 1;
-                ejecucciones = ejecucciones + 1;
-            }
-            Escri.Close();
-            Escriba.Close();
-            Ensayar.Close();
-            Conexion.Close();
-            CountUpdate = 0;
-            this.btnUpdate.Enabled = false;
-
-            this.label18.Text = "Se procesaron " + rows.Length + " registros";
-            MessageBox.Show("Registros actualizados");  
-            
-        }
+        
+        
+        
 
     }
 }
