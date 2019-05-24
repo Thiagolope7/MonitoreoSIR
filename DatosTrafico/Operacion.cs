@@ -84,10 +84,13 @@ namespace DatosTrafico
             {
                 foreach (ManagementObject mo in mos.Get())
                 {
-                    Logarchivo= "EstadosLOG/Logistica.txt";
-                    //FileStream ArchivoTxT = new FileStream("C:/Traza/EstadosLOG/Logistica.txt", FileMode.Append, FileAccess.Write);
-                    //StreamWriter Escribir = new StreamWriter(ArchivoTxT);
-                    EscribeLog.escribe(mo["CommandLine"].ToString(),Logarchivo);
+                    // Logarchivo= "EstadosLOG/Logistica.txt";
+                    FileStream ArchivoTxT = new FileStream("C:/Traza/EstadosLOG/Logistica.txt", FileMode.Append, FileAccess.Write);
+                    StreamWriter Escribir = new StreamWriter(ArchivoTxT);
+                    Escribir.Write(mo["CommandLine"]);
+                    Escribir.WriteLine();
+                    Escribir.Flush();
+                    Escribir.Close();
                     Console.WriteLine(mo["CommandLine"]);
                 }
             }
