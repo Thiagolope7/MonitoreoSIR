@@ -42,7 +42,9 @@ namespace DatosTrafico
             SqlDataAdapter da = new SqlDataAdapter("select top 10 Logic_code,Fecha,Intensidad,VehiculoLongitud1,VehiculoLongitud2,VehiculoLongitud3,Ocupacion,Velocidad from MEDELLIN_HIST..H_TRAF_DETECTOR_DATA_1MIN where Logic_code in (select ELEM_GEN_COD_LOG  from MEDELLIN_CONF..TUN_ELEMENTO_GENERICO where TIP_EQUIP_CODIGO in (3, 14, 15) " +
                                              " and ELE_TIP_EQUIP_CODIGO in (14, null)) and fecha between '" + Ahora1String + "' and '" + AhoraString + "' order by fecha desc ", Conexion);
             DataTable dt = new DataTable();
-            da.Fill(dt);
+            try
+            {
+                da.Fill(dt);
             if (dt.Rows.Count == 0)
             {
                 EscribeLog.escribe(" ERROR No se encontró datos",Logarchivo);              
@@ -61,8 +63,12 @@ namespace DatosTrafico
                 this.lblCCTV.Text = "Running";
                 Conexion.Close();
                 return;
-            }    
-           
+            }
+            }
+            catch (SqlException e)
+            {
+                EscribeLog.escribe(e.ToString(), Logarchivo);
+            }
         }
         private void BtnStart_Click(object sender, EventArgs e)
         {
@@ -99,6 +105,7 @@ namespace DatosTrafico
             SqlDataAdapter da = new SqlDataAdapter("select top 10 Logic_code,Fecha,Intensidad,VehiculoLongitud1,VehiculoLongitud2,VehiculoLongitud3,Ocupacion,Velocidad from MEDELLIN_HIST..H_TRAF_DETECTOR_DATA_1MIN where Logic_code in (select ELEM_GEN_COD_LOG " +
                                 "from MEDELLIN_CONF..TUN_ELEMENTO_GENERICO where TIP_EQUIP_CODIGO = 3 and ELE_TIP_EQUIP_CODIGO is null) and fecha between '" + Ahora1String + "' and '" + AhoraString + "' order by fecha desc ", Conexion);
             DataTable dt = new DataTable();
+            try { 
             da.Fill(dt);
             if (dt.Rows.Count == 0)
             {
@@ -119,6 +126,11 @@ namespace DatosTrafico
                 Conexion.Close();
                 return;
             }
+            }
+            catch (SqlException e)
+            {
+                EscribeLog.escribe(e.ToString(), Logarchivo);
+            }
         }
         public void FDT()
         {
@@ -133,26 +145,32 @@ namespace DatosTrafico
                 SqlDataAdapter da = new SqlDataAdapter("select top 10 Logic_code,Fecha,Intensidad,VehiculoLongitud1,VehiculoLongitud2,VehiculoLongitud3,Ocupacion,Velocidad from MEDELLIN_HIST..H_TRAF_DETECTOR_DATA_HORA where Logic_code in (select ELEM_GEN_COD_LOG " +
                                 "from MEDELLIN_CONF..TUN_ELEMENTO_GENERICO where ELE_TIP_EQUIP_CODIGO = 1004) and fecha between '" + Ahora1String + "' and '" + AhoraString + "' ", Conexion);
                 DataTable dt = new DataTable();
+            try
+            {
                 da.Fill(dt);
 
-            if (dt.Rows.Count == 0)
-            {
-                EscribeLog.escribe( " ERROR no encontrarón datos de FDT",Logarchivo);               
-                this.label6.Visible = true;
-                this.label6.BackColor = Color.Red;
-                this.label6.Text = "Stopped";
-                string Mensaje = "No se encontró datos de FDT a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
-                Conexion.Close();
+                if (dt.Rows.Count == 0)
+                {
+                    EscribeLog.escribe(" ERROR no encontrarón datos de FDT", Logarchivo);
+                    this.label6.Visible = true;
+                    this.label6.BackColor = Color.Red;
+                    this.label6.Text = "Stopped";
+                    string Mensaje = "No se encontró datos de FDT a esta hora -> ";
+                    EnviarMail.Mail(Mensaje);
+                    Conexion.Close();
+                }
+
+                else
+                {
+                    EscribeLog.escribe(" INFO Se encontrarón datos de FDT", Logarchivo);
+                    this.label6.Visible = true;
+                    this.label6.Text = "Running";
+                    Conexion.Close();
+                    return;
+                }
             }
-        
-            else
-            {
-                EscribeLog.escribe( " INFO Se encontrarón datos de FDT",Logarchivo);
-                this.label6.Visible = true;
-                this.label6.Text = "Running";
-                Conexion.Close();
-                return;
+            catch (SqlException e) {
+                EscribeLog.escribe(e.ToString(), Logarchivo);
             }
         }
         public void Logger()
