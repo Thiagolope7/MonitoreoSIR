@@ -185,6 +185,8 @@ namespace DatosTrafico
             Conexion.Close();
             hora = hora * 24;
             EscribeLog.escribe("se finaliza la tarea de descargar", Logarchivo);
+            DateTime horaaa =DateTime.Now;
+            Ult_des_ERU.Text = horaaa.ToString();
 
         }
 
