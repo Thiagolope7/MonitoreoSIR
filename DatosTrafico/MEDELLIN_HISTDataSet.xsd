@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="MEDELLIN_HISTDataSet" targetNamespace="http://tempuri.org/MEDELLIN_HISTDataSet.xsd" xmlns:mstns="http://tempuri.org/MEDELLIN_HISTDataSet.xsd" xmlns="http://tempuri.org/MEDELLIN_HISTDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="MEDELLIN_HISTConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="MEDELLIN_HISTConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.DatosTrafico.Properties.Settings.GlobalReference.Default.MEDELLIN_HISTConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="Seg_datos_alertaTableAdapter" GeneratorDataComponentClassName="Seg_datos_alertaTableAdapter" Name="Seg_datos_alerta" UserDataComponentName="Seg_datos_alertaTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="MEDELLIN_HISTConnectionString (Settings)" DbObjectName="MEDELLIN_HIST.dbo.Seg_datos_alerta" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT nombre, Porcentaje_faltante FROM dbo.Seg_datos_alerta</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="nombre" DataSetColumn="nombre" />
+              <Mapping SourceColumn="Porcentaje_faltante" DataSetColumn="Porcentaje_faltante" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="MEDELLIN_HISTDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="MEDELLIN_HISTDataSet" msprop:Generator_UserDSName="MEDELLIN_HISTDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="Seg_datos_alerta" msprop:Generator_TableClassName="Seg_datos_alertaDataTable" msprop:Generator_TableVarName="tableSeg_datos_alerta" msprop:Generator_TablePropName="Seg_datos_alerta" msprop:Generator_RowDeletingName="Seg_datos_alertaRowDeleting" msprop:Generator_RowChangingName="Seg_datos_alertaRowChanging" msprop:Generator_RowEvHandlerName="Seg_datos_alertaRowChangeEventHandler" msprop:Generator_RowDeletedName="Seg_datos_alertaRowDeleted" msprop:Generator_UserTableName="Seg_datos_alerta" msprop:Generator_RowChangedName="Seg_datos_alertaRowChanged" msprop:Generator_RowEvArgName="Seg_datos_alertaRowChangeEvent" msprop:Generator_RowClassName="Seg_datos_alertaRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="nombre" msprop:Generator_ColumnVarNameInTable="columnnombre" msprop:Generator_ColumnPropNameInRow="nombre" msprop:Generator_ColumnPropNameInTable="nombreColumn" msprop:Generator_UserColumnName="nombre">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="50" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Porcentaje_faltante" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnPorcentaje_faltante" msprop:Generator_ColumnPropNameInRow="Porcentaje_faltante" msprop:Generator_ColumnPropNameInTable="Porcentaje_faltanteColumn" msprop:Generator_UserColumnName="Porcentaje_faltante" type="xs:int" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
