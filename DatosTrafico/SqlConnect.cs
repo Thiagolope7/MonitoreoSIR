@@ -9,7 +9,7 @@ public class SqlConnect
         SqlConnection Conexion;
         try
         {
-            Conexion = new SqlConnection("Data Source=10.158.64.91;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True;User ID=indra;Password=0f120400DdBblog");
+            Conexion = new SqlConnection("Data Source=10.158.64.91;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True;User ID=indra;Password=0f120400DdBblog;MultipleActiveResultSets=true");
         }
         catch (Exception ex)
         {
