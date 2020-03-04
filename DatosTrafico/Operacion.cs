@@ -36,6 +36,7 @@ namespace DatosTrafico
 
         public void Kernel()
         {
+            int anmgh = 0;
             Logarchivo = "Kernel.txt";
             string Proceso = "Kernel-final";
             Process[] Kernel = Process.GetProcessesByName(Proceso);
