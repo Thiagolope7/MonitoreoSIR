@@ -12,7 +12,7 @@ namespace DatosTrafico
     public partial class ERU : Form
     {
         //private SqlConnection Conexion;
-        private static int Cuenta = 60, Cuenta1 = 86400;
+        private int a1 = 0;
         public static string Logarchivo = "ftp.txt";
         public ERU()
         {
@@ -21,53 +21,26 @@ namespace DatosTrafico
 
 
 
-            //hreadStart delegado = new ThreadStart(Datos_act);
-            //ThreadStart delegado2 = new ThreadStart(desc_ar);
+            ThreadStart delegado = new ThreadStart(Datos_act);
+            ThreadStart delegado2 = new ThreadStart(desc_ar);
             // creamos el delegado 
-            //Thread hilo = new Thread(delegado);
-            //Thread hilo1 = new Thread(delegado2);
+            Thread hilo = new Thread(delegado);
+            Thread hilo1 = new Thread(delegado2);
             //creamos el hilo
-            //hilo.Start();
+            hilo.Start();
 
 
 
         }
 
-        public void Ult_gran()
-        {
-            string query = "SELECT TOP(1) [FECHA] ,[Tipo_Gran] FROM[MEDELLIN_HIST].[dbo].[LOG_TEMP] order by fecha desc";
-            SqlConnection Conexion = SqlConnect.ConexionSQL();
-            Conexion.Open();
-            SqlCommand comando = new SqlCommand(query, Conexion);
-            SqlDataReader dr = comando.ExecuteReader();
-            while (dr.Read())
-            {
-                Fec_ult_gr.Text = dr.GetDateTime(dr.GetOrdinal("FECHA")).ToString();
 
-                int a5 = Int32.Parse( dr.GetString(dr.GetOrdinal("Tipo_Gran")));
-                switch (a5){
-                    case 5:
-                        Tip_ult_gran.Text = "5 minutos";
-                        break;
-                    case 15:
-                        Tip_ult_gran.Text = "15 minutos";
-                        break;
-                    case 60:
-                        Tip_ult_gran.Text = "Hora";
-                        break;
-
-                }
-                
-            }
-
-            }
         public void Datos_act()
         {
-            
+            int c1 = 1;
 
 
 
-            //Series series = new Series();
+            Series series = new Series();
 
             string query = "SELECT fecha,nombre,c_registros FROM Seg_datos_logic";
             SqlConnection Conexion = SqlConnect.ConexionSQL();
@@ -89,7 +62,9 @@ namespace DatosTrafico
                 dataGridView1.Rows.Clear();
             }
 
-            
+            //DataGridViewCellFormattingEventArgs e ;
+
+            //SqlDataAdapter da = new SqlDataAdapter("SELECT fecha,nombre,c_registros FROM Seg_datos_logic",Conexion);
             SqlDataReader dr = comando.ExecuteReader();
             int debajo = 0, arriba = 0, normal = 0, renglon = 0;
 
@@ -140,14 +115,37 @@ namespace DatosTrafico
                 dataGridView1.Rows[renglon].Cells[1].Value = dr.GetInt32(dr.GetOrdinal("c_registros")).ToString();
             }
             //Series series = this.chart1.Series.Add("Debajo");
-            
-               
+            if (c1 > 1)
+            {
+                Invoke((MethodInvoker)(() =>
+                {
 
+                    series = this.chart1.Series.Add("< 54");
+                    series.Points.Add(debajo);
+                    series = this.chart1.Series.Add("> 66");
+                    series.Points.Add(arriba);
                     Conexion.Close();
-                
+                    System.Threading.Thread.Sleep(3600000);
+                    chart1.Series.Clear();
+                }));
 
-          
-            
+            }
+            else
+            {
+                //	series = this.chart1.Series.Add("< 54");
+                //	series.Points.Add(debajo);
+                //	series = this.chart1.Series.Add("> 66");
+                //	series.Points.Add(arriba);
+                //	Conexion.Close();
+                System.Threading.Thread.Sleep(2000);
+                c1 = 2;
+                //chart1.Series.Clear();
+
+                //Invoke((MethodInvoker)(() =>
+                //{chart1.Series.Clear();
+                //}));
+            }
+            c1 = 2;
 
 
 
@@ -328,46 +326,17 @@ namespace DatosTrafico
         private void button1_Click_1(object sender, EventArgs e)
         {
 
-
-            ////desc_ar();
-            ////ThreadStart delegado = new ThreadStart(Datos_act);
-            //ThreadStart delegado2 = new ThreadStart(desc_ar);
-            //// creamos el delegado 
-
-            //Thread hilo1 = new Thread(delegado2);
-            //hilo1.Start();
-            timer1.Enabled = true;
-            timer1.Interval = 1000;
-            
-            timer1.Start();
-            this.button1.Enabled= false;
-
-
-        }
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-        
-            if (Cuenta != 0)
+            if (a1 == 0)
             {
-                //this.label21.Text = Cuenta.ToString();
-                Cuenta -= 1;
+                //desc_ar();
+                //ThreadStart delegado = new ThreadStart(Datos_act);
+                ThreadStart delegado2 = new ThreadStart(desc_ar);
+                // creamos el delegado 
+
+                Thread hilo1 = new Thread(delegado2);
+                hilo1.Start();
             }
-            else
-            {
-                Datos_act();
-                Ult_gran();
-                Cuenta = 60;
-            }
-            if (Cuenta1 != 0)
-            {
-                //this.label21.Text = Cuenta.ToString();
-                Cuenta1 -= 1;
-            }
-            else
-            {
-                desc_ar();
-                Cuenta1 = 86400;
-            }
+            a1++;
         }
     }
 }

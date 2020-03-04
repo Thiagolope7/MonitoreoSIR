@@ -104,12 +104,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReporteCamaras.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ReporteCamaras.Designer.cs">
-      <DependentUpon>ReporteCamaras.cs</DependentUpon>
-    </Compile>
     <Compile Include="SqlConnect.cs" />
     <Compile Include="SqlServerTypes\Loader.cs" />
     <EmbeddedResource Include="DatosTrafico.resx">
@@ -134,9 +128,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="ReporteCamaras.resx">
-      <DependentUpon>ReporteCamaras.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="R_camara.rdlc" />
     <None Include="MEDELLIN_HISTDataSet.xsc">
       <DependentUpon>MEDELLIN_HISTDataSet.xsd</DependentUpon>
