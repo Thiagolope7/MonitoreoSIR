@@ -22,5 +22,16 @@ namespace DatosTrafico.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=10.158.64.91;Initial Catalog=MEDELLIN_HIST;Persist Security Info=True" +
+            ";User ID=indra;Password=0f120400DdBblog")]
+        public string MEDELLIN_HISTConnectionString {
+            get {
+                return ((string)(this["MEDELLIN_HISTConnectionString"]));
+            }
+        }
     }
 }
