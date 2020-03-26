@@ -2,31 +2,16 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Management;
-using System.Collections;
-using System.Data.SqlClient;
 
 namespace DatosTrafico
 {
     public partial class Operacion : Form
     {
-        public static int CountVAL = 0;
-        public static int counLeer = 0;
-        public int Cuenta = 60;
-        public static int CountUpdate = 0;
-        public static int countPB = 0;
-        public static int ejecucciones = 0;
-        public static String Logarchivo;
-        SqlConnection Conexion = SqlConnect.ConexionSQL();
         public Operacion()
         {
             InitializeComponent();
