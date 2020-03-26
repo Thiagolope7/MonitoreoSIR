@@ -252,7 +252,7 @@
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label9.Location = new System.Drawing.Point(358, 222);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(83, 19);
+            this.label9.Size = new System.Drawing.Size(84, 19);
             this.label9.TabIndex = 15;
             this.label9.Text = "Driver DAI";
             // 
@@ -286,7 +286,7 @@
             this.label15.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.Location = new System.Drawing.Point(3, 23);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(598, 18);
+            this.label15.Size = new System.Drawing.Size(611, 18);
             this.label15.TabIndex = 1;
             this.label15.Text = "- En Bdv se encuentran las encargadas de escribir en SQL, verificamos su funciona" +
     "miento.";
@@ -297,7 +297,7 @@
             this.label14.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(3, 4);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(538, 18);
+            this.label14.Size = new System.Drawing.Size(553, 18);
             this.label14.TabIndex = 0;
             this.label14.Text = "- En, SQL verificamos cada minuto que se encuentre datos en la tabla de 1 minuto." +
     "";
@@ -330,7 +330,7 @@
             this.label18.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label18.Location = new System.Drawing.Point(371, 296);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(170, 19);
+            this.label18.Size = new System.Drawing.Size(173, 19);
             this.label18.TabIndex = 20;
             this.label18.Text = "Próxima ejecución en: ";
             // 
@@ -354,7 +354,7 @@
             this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label20.Location = new System.Drawing.Point(22, 296);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(170, 19);
+            this.label20.Size = new System.Drawing.Size(173, 19);
             this.label20.TabIndex = 22;
             this.label20.Text = "Próxima ejecución en: ";
             // 
@@ -421,6 +421,7 @@
             this.MaximizeBox = false;
             this.Name = "DatosTrafico";
             this.Text = "DatosTrafico";
+            this.Load += new System.EventHandler(this.DatosTrafico_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

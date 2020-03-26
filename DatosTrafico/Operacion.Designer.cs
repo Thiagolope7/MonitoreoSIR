@@ -74,7 +74,7 @@
             this.label14.Font = new System.Drawing.Font("Bahnschrift", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.Location = new System.Drawing.Point(3, 14);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(508, 18);
+            this.label14.Size = new System.Drawing.Size(519, 18);
             this.label14.TabIndex = 0;
             this.label14.Text = "- Se verifica si los procesos se encuentran corriendo, detenidos o duplicadas";
             // 
@@ -114,7 +114,7 @@
             this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label20.Location = new System.Drawing.Point(200, 322);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(170, 19);
+            this.label20.Size = new System.Drawing.Size(173, 19);
             this.label20.TabIndex = 45;
             this.label20.Text = "Próxima ejecución en: ";
             // 
@@ -329,7 +329,7 @@
             this.label16.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label16.Location = new System.Drawing.Point(38, 240);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(39, 19);
+            this.label16.Size = new System.Drawing.Size(40, 19);
             this.label16.TabIndex = 56;
             this.label16.Text = "MTV";
             // 
@@ -388,6 +388,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Operacion";
             this.Text = "Operacion";
+            this.Load += new System.EventHandler(this.Operacion_Load);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);

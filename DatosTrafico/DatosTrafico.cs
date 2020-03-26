@@ -366,6 +366,11 @@ namespace DatosTrafico
             this.btnProcesos.Enabled = true;
 
         }
+
+        private void DatosTrafico_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
