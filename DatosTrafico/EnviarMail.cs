@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatosTrafico
 {
     class EnviarMail
     {
         public static String Logarchivo;
-        public static void Mail(string Mensaje)
+        public static void Mail(string[] Mensaje)
         {
             Logarchivo = "MAIL.txt";
 
@@ -20,10 +16,10 @@ namespace DatosTrafico
             var fromAddress = new MailAddress("diagindra@gmail.com", "Rutina Hermes");
             var toAddress = new MailAddress("santiagolopera13@gmail.com", "Santiago Agudelo");
             const string fromPassword = "Medellin2017a!";
-            const string subject = "Alerta | Hermes";
-            string body = Mensaje + TimeMail1;
-            MailAddress copyD = new MailAddress("davidmartinez.189@gmail.com", "David Martinez");
-            MailAddress copyE = new MailAddress("elmer.aua@gmail.com", "Elmer Usuga");
+            const string subject = "Hermes | ARS | Menos de 90% de datos en una hora";
+            string body = string.Join("<br/>", Mensaje);
+            //MailAddress copyD = new MailAddress("davidmartinez.189@gmail.com", "David Martinez");
+            //MailAddress copyE = new MailAddress("elmer.aua@gmail.com", "Elmer Usuga");
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -35,13 +31,15 @@ namespace DatosTrafico
             };
             using (var message = new MailMessage(fromAddress, toAddress)
             {
+
                 Subject = subject,
+                IsBodyHtml = true,
                 Body = body
             })
                 try
                 {
-                    message.CC.Add(copyD);
-                    message.CC.Add(copyE);
+                    //message.CC.Add(copyD);
+                    //message.CC.Add(copyE);
                     smtp.Send(message);
                     EscribeLog.escribe(" Se envió mail correctamente con el mensaje -> " + Mensaje + TimeMail1, Logarchivo);
 

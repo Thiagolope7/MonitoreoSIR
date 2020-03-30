@@ -53,8 +53,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta detenido", Logarchivo);
 
-                    string Mensaje = "La BDV Kernel se encuentra detenida a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV Kernel se encuentra detenida a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label4.Visible = true;
                     this.label4.Text = "Stopped";
                     this.label4.BackColor = Color.Red;
@@ -63,8 +63,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta más de una vez", Logarchivo);
 
-                    string Mensaje = "La BDV Kernel se encuentra duplicada a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV Kernel se encuentra duplicada a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label4.Visible = true;
                     this.label4.Text = "Duplicated";
                     this.label4.BackColor = Color.Yellow;
@@ -145,8 +145,8 @@ namespace DatosTrafico
                 Escr.WriteLine();
                 Escr.Flush();
                 Escr.Close();
-                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
+                //string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                //EnviarMail.Mail(Mensaje);
                 timer2.Stop();
                 try
                 {
@@ -334,8 +334,8 @@ namespace DatosTrafico
                 EscribeLog.escribe(",El proceso Bdv_Fotodetección esta duplicado", Logarchivo);
 
                 CountVAL = 0;
-                string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
+                //string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
+                //EnviarMail.Mail(Mensaje);
                 return;
             }
             else if (CountVAL == 0)
@@ -346,8 +346,8 @@ namespace DatosTrafico
                 EscribeLog.escribe(",El proceso Bdv_Fotodetección esta detenido", Logarchivo);
 
                 CountVAL = 0;
-                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
+                //string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                //EnviarMail.Mail(Mensaje);
                 return;
             }
         }
@@ -396,8 +396,8 @@ namespace DatosTrafico
                 EscribeLog.escribe(",El proceso Bdv_Fotodetección esta duplicado", Logarchivo);
 
                 CountVAL = 0;
-                string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
+                //string Mensaje = "La BDV Logistica se encuentra duplicada a esta hora -> ";
+                //EnviarMail.Mail(Mensaje);
                 return;
             }
             else if (CountVAL == 0)
@@ -408,8 +408,8 @@ namespace DatosTrafico
                 EscribeLog.escribe(",El proceso Bdv_Fotodetección esta detenido", Logarchivo);
 
                 CountVAL = 0;
-                string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
-                EnviarMail.Mail(Mensaje);
+                //string Mensaje = "La BDV Logistica se encuentra detenida a esta hora -> ";
+                //EnviarMail.Mail(Mensaje);
                 return;
             }
         }
@@ -434,8 +434,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta detenido", Logarchivo);
 
-                    string Mensaje = "La BDV PMV se encuentra detenida a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV PMV se encuentra detenida a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label9.Visible = true;
                     this.label9.Text = "Stopped";
                     this.label9.BackColor = Color.Red;
@@ -444,8 +444,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta más de una vez", Logarchivo);
 
-                    string Mensaje = "La BDV PMV se encuentra duplicada a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV PMV se encuentra duplicada a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label9.Visible = true;
                     this.label9.Text = "Duplicated";
                     this.label9.BackColor = Color.Yellow;
@@ -474,8 +474,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta detenido", Logarchivo);
 
-                    string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label11.Visible = true;
                     this.label11.Text = "Stopped";
                     this.label11.BackColor = Color.Red;
@@ -484,8 +484,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta más de una vez", Logarchivo);
 
-                    string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label11.Visible = true;
                     this.label11.Text = "Duplicated";
                     this.label11.BackColor = Color.Yellow;
@@ -514,8 +514,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta detenido", Logarchivo);
 
-                    string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV MTV se encuentra detenida a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label13.Visible = true;
                     this.label13.Text = "Stopped";
                     this.label13.BackColor = Color.Red;
@@ -524,8 +524,8 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(",El proceso " + Proceso + " esta más de una vez", Logarchivo);
 
-                    string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
-                    EnviarMail.Mail(Mensaje);
+                    //string Mensaje = "La BDV MTV se encuentra duplicada a esta hora -> ";
+                    //EnviarMail.Mail(Mensaje);
                     this.label13.Visible = true;
                     this.label13.Text = "Duplicated";
                     this.label13.BackColor = Color.Yellow;
