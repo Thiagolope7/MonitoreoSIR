@@ -3,12 +3,13 @@
 namespace DatosTrafico
 {
     using System;
+    using System.Drawing;
     using System.Windows.Forms;
 
     public partial class Form1 : Form
     {
 		public static int dat = 0;
-		
+        int Cerrar = 0;
         public Form1()
         {
             InitializeComponent();
@@ -85,5 +86,42 @@ namespace DatosTrafico
             ERU(new ERU());
 
         }
-	}
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Show();
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            if (Cerrar == 1)
+            {
+                
+            }
+            else
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+           
+        }
+
+        private void restaurarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
+        private void cerrarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            
+            Cerrar = Cerrar + 1; 
+            this.Close();
+        }
+    }
 }

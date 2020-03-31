@@ -291,8 +291,6 @@ namespace DatosTrafico
         public void FDT()
         {
             Logarchivo = "FDT.txt";
-            //FileStream ArchivoTxT = new FileStream("C:/Traza/FDT.txt", FileMode.Append, FileAccess.Write);
-            //StreamWriter Escribir = new StreamWriter(ArchivoTxT);
             StreamReader objReader = new StreamReader("C:/Traza/EstadosLOG/Logistica.txt");
             string sLine;
             ArrayList arrLOG = new ArrayList();
