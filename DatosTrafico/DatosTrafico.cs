@@ -22,32 +22,26 @@ namespace DatosTrafico
         }
         public void CCTV()
         {
-
             Logarchivo = "DAI.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("16:45"))
+            if (Val1.Contains("00:05"))
             {
                 val += 1; 
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahora1 = Ahora.AddMinutes(-30);
+                DateTime Ahora1 = Ahora.AddMinutes(-10);
                 string AhoraString = Ahora1.ToString("yyyy-MM-dd HH:mm:ss.FFF");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
                                                        " where fecha > '" + AhoraString + "' and c_registros <= 1296 and nombre like 'DAI-%' " +
                                                        "order by fecha desc ", Conexion);
                 SqlDataReader leer;
-                int count = 0;
-                //string[] fecha = new string[400];
+                int count = 0;               
                 string[] nombre = new string[400];
                 string[] CRegistro = new string[400];
                 leer = da.ExecuteReader();
-                this.lblCCTV.Visible = true;
-                this.lblCCTV.Text = "Running";
-                this.lblCCTV.BackColor = Color.Red;
                 while (leer.Read() == true)
                 {
-                    //fecha[count] = leer[0].ToString();
                     nombre[count] = leer[1].ToString();
                     CRegistro[count] = leer[2].ToString();
                     count = 1 + count;
@@ -64,7 +58,6 @@ namespace DatosTrafico
                     }
                     else
                     {
-
                         EscribeLog.escribe("Algunos carriles tienen problema escritos", Logarchivo);
                         this.lblCCTV.Visible = true;
                         this.lblCCTV.Text = "Warnning";
@@ -72,7 +65,7 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = /*fecha[i].ToString() + ", " +*/ nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = nombre[i].ToString() + ", " + CRegistro[i].ToString();
                         }
                         EnviarMail.Mail(Mensaje);
                         Conexion.Close();
@@ -83,16 +76,6 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(e.ToString(), Logarchivo);
                     Conexion.Close();
-                }
-            }
-            else
-            {
-
-                if (lblCCTV.Text != "Warnning" || lblCCTV.Text != "Running")
-                {
-                    this.lblCCTV.Visible = true;
-                    this.lblCCTV.Text = "Pending";
-                    this.lblCCTV.BackColor = Color.Purple;
                 }
             }
         }
@@ -132,39 +115,34 @@ namespace DatosTrafico
             Logarchivo = "ARS.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("16:45"))
+            if (Val1.Contains("00:05"))
             {
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahorahr = Ahora.AddMinutes(-30);
+                DateTime Ahorahr = Ahora.AddMinutes(-10);
                 string AhorahrString = Ahorahr.ToString("yyyy-MM-dd HH:mm:ss.FFF");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
-                                                       " where fecha > '" + AhorahrString + "' and c_registros <= 54 and nombre like 'xc-%'" +
+                                                       " where fecha > '" + AhorahrString + "' and c_registros <= 1296 and nombre like 'xc-%'" +
                                                        " order by fecha desc  ", Conexion);
                 SqlDataReader leer;
                 int count = 0;
-               // string[] fecha = new string[200];
-                string[] nombre = new string[200];
-                string[] CRegistro = new string[200];
+                string[] nombre = new string[400];
+                string[] CRegistro = new string[400];
                 leer = da.ExecuteReader();
-                this.label5.Visible = true;
-                this.label5.BackColor = Color.Red;
-                this.label5.Text = "Running";
                 while (leer.Read() == true)
-                {
-                    //fecha[count] = leer[0].ToString();
+                {                  
                     nombre[count] = leer[1].ToString();
                     CRegistro[count] = leer[2].ToString();
                     count = 1 + count;
                 }
                 try
                 {
-
                     if (count == 0)
                     {
-                        EscribeLog.escribe(" Todos los datos están completos ", Logarchivo);
+                        EscribeLog.escribe(" Todos los datos están completos", Logarchivo);
                         this.label5.Visible = true;
                         this.label5.Text = "Running";
+                        this.label5.BackColor = Color.Green;
                         Conexion.Close();
                     }
                     else
@@ -176,7 +154,7 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = /*fecha[i].ToString() + ", " +*/ nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = nombre[i].ToString() + ", " + CRegistro[i].ToString();
                         }
                         EnviarMail.Mail(Mensaje);
                         Conexion.Close();
@@ -187,15 +165,6 @@ namespace DatosTrafico
                 {
                     EscribeLog.escribe(e.ToString(), Logarchivo);
                     Conexion.Close();
-                }
-            }
-            else
-            {
-                if (label5.Text != "Warnning" || label5.Text != "Running")
-                {
-                    this.label5.Visible = true;
-                    this.label5.Text = "Pending";
-                    this.label5.BackColor = Color.Purple;
                 }
             }
         }

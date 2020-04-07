@@ -99,25 +99,25 @@
             // lblCCTV
             // 
             this.lblCCTV.AutoSize = true;
-            this.lblCCTV.BackColor = System.Drawing.Color.LimeGreen;
+            this.lblCCTV.BackColor = System.Drawing.Color.RoyalBlue;
             this.lblCCTV.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblCCTV.Location = new System.Drawing.Point(144, 99);
             this.lblCCTV.Name = "lblCCTV";
-            this.lblCCTV.Size = new System.Drawing.Size(55, 19);
+            this.lblCCTV.Size = new System.Drawing.Size(67, 19);
             this.lblCCTV.TabIndex = 3;
-            this.lblCCTV.Text = "label4";
+            this.lblCCTV.Text = "Pending";
             this.lblCCTV.Visible = false;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.LimeGreen;
+            this.label5.BackColor = System.Drawing.Color.RoyalBlue;
             this.label5.Font = new System.Drawing.Font("Bahnschrift", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(144, 139);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(55, 19);
+            this.label5.Size = new System.Drawing.Size(67, 19);
             this.label5.TabIndex = 4;
-            this.label5.Text = "label5";
+            this.label5.Text = "Pending";
             this.label5.Visible = false;
             // 
             // label6

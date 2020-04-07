@@ -18,7 +18,7 @@ namespace DatosTrafico
             var fromAddress = new MailAddress("diagindra@gmail.com", "Rutina Hermes");
             var toAddress = new MailAddress("santiagolopera13@gmail.com", "Santiago Agudelo");
             const string fromPassword = "Medellin2017a!";
-            string subject = "Hermes | ARS | Menos de 90% de datos en el día " + TimeMail1;
+            string subject = "Hermes | Menos de 90% de datos en el día " + TimeMail1;
             string body = string.Join("<br/>", Mensaje);
             MailAddress copyD = new MailAddress("davidmartinez.189@gmail.com", "David Martinez");
             MailAddress copyE = new MailAddress("elmer.aua@gmail.com", "Elmer Usuga");
