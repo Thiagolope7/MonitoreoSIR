@@ -13,6 +13,8 @@ namespace DatosTrafico
         public Form1()
         {
             InitializeComponent();
+            this.btnOperacion.Enabled = false;
+            this.btnERU.Enabled = false; 
         }
 		DatosTrafico DT1 = new DatosTrafico();
 		Operacion Op = new Operacion();

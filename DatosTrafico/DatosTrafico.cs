@@ -10,38 +10,44 @@ namespace DatosTrafico
 
     public partial class DatosTrafico : Form
     {
+        int val = 0; 
         public static String Logarchivo;
         SqlConnection Conexion = SqlConnect.ConexionSQL();
-        public int Cuenta = 60;
-
+        public int Cuenta = 10;
         public DatosTrafico()
         {
             InitializeComponent();
+            this.btnProcesos.Enabled = false; 
 
         }
         public void CCTV()
         {
+
             Logarchivo = "DAI.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains(":30"))
+            if (Val1.Contains("16:45"))
             {
+                val += 1; 
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahorahr = Ahora.AddMinutes(-33);
-                string AhoraString = Ahorahr.ToString("yyyy-MM-dd HH:mm:ss.FFF");
+                DateTime Ahora1 = Ahora.AddMinutes(-30);
+                string AhoraString = Ahora1.ToString("yyyy-MM-dd HH:mm:ss.FFF");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
-                                                       " where fecha > '" + AhoraString + "' and c_registros <= 54 and nombre like 'DAI-%' " +
-                                                        "order by fecha desc ", Conexion);
+                                                       " where fecha > '" + AhoraString + "' and c_registros <= 1296 and nombre like 'DAI-%' " +
+                                                       "order by fecha desc ", Conexion);
                 SqlDataReader leer;
                 int count = 0;
-                string[] fecha = new string[200];
-                string[] nombre = new string[200];
-                string[] CRegistro = new string[200];
+                //string[] fecha = new string[400];
+                string[] nombre = new string[400];
+                string[] CRegistro = new string[400];
                 leer = da.ExecuteReader();
+                this.lblCCTV.Visible = true;
+                this.lblCCTV.Text = "Running";
+                this.lblCCTV.BackColor = Color.Red;
                 while (leer.Read() == true)
                 {
-                    fecha[count] = leer[0].ToString();
+                    //fecha[count] = leer[0].ToString();
                     nombre[count] = leer[1].ToString();
                     CRegistro[count] = leer[2].ToString();
                     count = 1 + count;
@@ -66,19 +72,18 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = fecha[i].ToString() + ", " + nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = /*fecha[i].ToString() + ", " +*/ nombre[i].ToString() + ", " + CRegistro[i].ToString();
                         }
                         EnviarMail.Mail(Mensaje);
                         Conexion.Close();
                         return;
-                    } 
+                    }
                 }
                 catch (SqlException e)
                 {
                     EscribeLog.escribe(e.ToString(), Logarchivo);
                     Conexion.Close();
                 }
-
             }
             else
             {
@@ -90,7 +95,6 @@ namespace DatosTrafico
                     this.lblCCTV.BackColor = Color.Purple;
                 }
             }
-
         }
         private void BtnStart_Click(object sender, EventArgs e)
         {
@@ -101,44 +105,54 @@ namespace DatosTrafico
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (Cuenta != 0)
+            if (val == 0)
             {
-                this.label21.Text = Cuenta.ToString();
-                Cuenta -= 1;
-            }
-            else
+                if (Cuenta != 0)
+                {
+                    this.label21.Text = Cuenta.ToString();
+                    Cuenta -= 1;
+                }
+                else
+                {
+                    CCTV();
+                    ARS();
+                    Cuenta = 10;
+                }
+
+            } else
             {
-                CCTV();
-                ARS();
-                FDT();
-                Cuenta = 60;
+                System.Threading.Thread.Sleep(60000);
+                val = 0;
             }
 
-
+            
         }
         public void ARS()
         {
             Logarchivo = "ARS.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains(":30"))
+            if (Val1.Contains("16:45"))
             {
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahorahr = Ahora.AddMinutes(-33);
+                DateTime Ahorahr = Ahora.AddMinutes(-30);
                 string AhorahrString = Ahorahr.ToString("yyyy-MM-dd HH:mm:ss.FFF");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
                                                        " where fecha > '" + AhorahrString + "' and c_registros <= 54 and nombre like 'xc-%'" +
                                                        " order by fecha desc  ", Conexion);
                 SqlDataReader leer;
                 int count = 0;
-                string[] fecha = new string[200];
+               // string[] fecha = new string[200];
                 string[] nombre = new string[200];
                 string[] CRegistro = new string[200];
                 leer = da.ExecuteReader();
+                this.label5.Visible = true;
+                this.label5.BackColor = Color.Red;
+                this.label5.Text = "Running";
                 while (leer.Read() == true)
                 {
-                    fecha[count] = leer[0].ToString();
+                    //fecha[count] = leer[0].ToString();
                     nombre[count] = leer[1].ToString();
                     CRegistro[count] = leer[2].ToString();
                     count = 1 + count;
@@ -162,7 +176,7 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = fecha[i].ToString() + ", " + nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = /*fecha[i].ToString() + ", " +*/ nombre[i].ToString() + ", " + CRegistro[i].ToString();
                         }
                         EnviarMail.Mail(Mensaje);
                         Conexion.Close();
@@ -234,8 +248,8 @@ namespace DatosTrafico
             }
 
 
-          
-            
+
+
         }
         public void Logger()
         {
@@ -427,7 +441,7 @@ namespace DatosTrafico
             timer1.Stop();
             timer2.Stop();
             this.btnStart.Enabled = true;
-            this.btnProcesos.Enabled = true;
+            // this.btnProcesos.Enabled = true;
 
         }
 
