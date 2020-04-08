@@ -106,7 +106,6 @@
             this.lblCCTV.Size = new System.Drawing.Size(67, 19);
             this.lblCCTV.TabIndex = 3;
             this.lblCCTV.Text = "Pending";
-            this.lblCCTV.Visible = false;
             // 
             // label5
             // 
@@ -118,7 +117,6 @@
             this.label5.Size = new System.Drawing.Size(67, 19);
             this.label5.TabIndex = 4;
             this.label5.Text = "Pending";
-            this.label5.Visible = false;
             // 
             // label6
             // 

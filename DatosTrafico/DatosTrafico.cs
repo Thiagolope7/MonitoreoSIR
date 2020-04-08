@@ -18,22 +18,21 @@ namespace DatosTrafico
         {
             InitializeComponent();
             this.btnProcesos.Enabled = false; 
-
         }
         public void CCTV()
         {
             Logarchivo = "DAI.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("00:05"))
+            if (Val1.Contains("10:00"))
             {
                 val += 1; 
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahora1 = Ahora.AddMinutes(-10);
-                string AhoraString = Ahora1.ToString("yyyy-MM-dd HH:mm:ss.FFF");
+                DateTime Ahora1 = Ahora.AddDays(-1);
+                string AhoraString = Ahora1.ToString("yyyy-MM-dd");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
-                                                       " where fecha > '" + AhoraString + "' and c_registros <= 1296 and nombre like 'DAI-%' " +
+                                                       " where fecha > '" + AhoraString + " 00:00:00.000' and c_registros <= 1296 and nombre like 'DAI-%' " +
                                                        "order by fecha desc ", Conexion);
                 SqlDataReader leer;
                 int count = 0;               
@@ -115,14 +114,14 @@ namespace DatosTrafico
             Logarchivo = "ARS.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("00:05"))
+            if (Val1.Contains("10:00"))
             {
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
-                DateTime Ahorahr = Ahora.AddMinutes(-10);
-                string AhorahrString = Ahorahr.ToString("yyyy-MM-dd HH:mm:ss.FFF");
+                DateTime Ahorahr = Ahora.AddDays(-1);
+                string AhorahrString = Ahorahr.ToString("yyyy-MM-dd");
                 SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
-                                                       " where fecha > '" + AhorahrString + "' and c_registros <= 1296 and nombre like 'xc-%'" +
+                                                       " where fecha > '" + AhorahrString + " 00:00:00.000' and c_registros <= 1296 and nombre like 'xc-%'" +
                                                        " order by fecha desc  ", Conexion);
                 SqlDataReader leer;
                 int count = 0;
