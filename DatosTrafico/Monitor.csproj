@@ -78,6 +78,8 @@
       <DependentUpon>DatosTrafico.cs</DependentUpon>
     </Compile>
     <Compile Include="EnviarMail.cs" />
+    <Compile Include="EnviarMailDAI.cs" />
+    <Compile Include="EnviarMailFDT.cs" />
     <Compile Include="ERU.cs">
       <SubType>Form</SubType>
     </Compile>

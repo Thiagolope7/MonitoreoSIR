@@ -66,7 +66,7 @@ namespace DatosTrafico
                         {
                             Mensaje[i] = nombre[i].ToString() + ", " + CRegistro[i].ToString();
                         }
-                        EnviarMail.Mail(Mensaje);
+                        EnviarMailDAI.Mail(Mensaje);
                         Conexion.Close();
                         return;
                     }
@@ -98,6 +98,7 @@ namespace DatosTrafico
                 {
                     CCTV();
                     ARS();
+                    FDT();
                     Cuenta = 10;
                 }
 
@@ -173,51 +174,61 @@ namespace DatosTrafico
             Logarchivo = "FDT.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains(":30"))
+            if (Val1.Contains("10:00"))
             {
-                Conexion.Open();
-                DateTime Ahora = DateTime.Now;
-                DateTime Ahora2 = Ahora.AddMinutes(-90);
-                string AhoraString = Ahora2.ToString("yyyy-MM-dd HH:mm:ss.FFF");
-                DateTime Ahora1 = Ahora.AddMinutes(-180);
-                string Ahora1String = Ahora1.ToString("yyyy-MM-dd HH:mm:ss.FFF");
-                SqlDataAdapter da = new SqlDataAdapter("select top 10 Logic_code,Fecha,Intensidad,VehiculoLongitud1,VehiculoLongitud2,VehiculoLongitud3,Ocupacion,Velocidad from MEDELLIN_HIST..H_TRAF_DETECTOR_DATA_HORA where Logic_code in (select ELEM_GEN_COD_LOG " +
-                                "from MEDELLIN_CONF..TUN_ELEMENTO_GENERICO where ELE_TIP_EQUIP_CODIGO = 1004) and fecha between '" + Ahora1String + "' and '" + AhoraString + "' ", Conexion);
-                DataTable dt = new DataTable();
-                try
                 {
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
+                    Conexion.Open();
+                    DateTime Ahora = DateTime.Now;
+                    DateTime Ahorahr = Ahora.AddDays(-1);
+                    string AhorahrString = Ahorahr.ToString("yyyy-MM-dd");
+                    SqlCommand da = new SqlCommand("SELECT * FROM MEDELLIN_HIST..Seg_reg_min" +
+                                                           " where fecha > '" + AhorahrString + " 00:00:00.000' and c_registros <= 21 and nombre like 'FT-%'" +
+                                                           " order by fecha desc  ", Conexion);
+                    SqlDataReader leer;
+                    int count = 0;
+                    string[] nombre = new string[400];
+                    string[] CRegistro = new string[400];
+                    leer = da.ExecuteReader();
+                    while (leer.Read() == true)
                     {
-                        EscribeLog.escribe(" ERROR no encontrarón datos de FDT", Logarchivo);
-                        this.label6.Visible = true;
-                        this.label6.BackColor = Color.Red;
-                        this.label6.Text = "Stopped";
-                        //string Mensaje = "No se encontró datos de FDT a esta hora -> ";
-                        //EnviarMail.Mail(Mensaje);
+                        nombre[count] = leer[1].ToString();
+                        CRegistro[count] = leer[2].ToString();
+                        count = 1 + count;
+                    }
+                    try
+                    {
+
+                        if (count == 0)
+                        {
+                            EscribeLog.escribe(" Todos los datos están completos", Logarchivo);
+                            this.label6.Visible = true;
+                            this.label6.Text = "Running";
+                            this.label6.BackColor = Color.Green;
+                            Conexion.Close();
+                        }
+                        else
+                        {
+                            EscribeLog.escribe("Algunos carriles tienen problema escritos", Logarchivo);
+                            this.label6.Visible = true;
+                            this.label6.BackColor = Color.Yellow;
+                            this.label6.Text = "Warnning";
+                            string[] Mensaje = new string[count];
+                            for (int i = 0; i < count; i++)
+                            {
+                                Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString()+ "</td></tr>";
+                            }
+                            EnviarMailFDT.Mail(Mensaje);
+                            Conexion.Close();
+                            return;
+                        }
+                    }
+                    catch (SqlException e)
+                    {
+                        EscribeLog.escribe(e.ToString(), Logarchivo);
                         Conexion.Close();
                     }
-
-                    else
-                    {
-                        EscribeLog.escribe(" INFO Se encontrarón datos de FDT", Logarchivo);
-                        this.label6.Visible = true;
-                        this.label6.Text = "Running";
-                        Conexion.Close();
-                        return;
-                    }
                 }
-                catch (SqlException e)
-                {
-                    EscribeLog.escribe(e.ToString(), Logarchivo);
-                }
-
             }
-
-
-
-
         }
         public void Logger()
         {
