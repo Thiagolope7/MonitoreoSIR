@@ -24,7 +24,7 @@ namespace DatosTrafico
             Logarchivo = "DAI.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("10:00"))
+            if (Val1.Contains("10:15"))
             {
                 val += 1; 
                 Conexion.Open();
@@ -64,7 +64,7 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
                         EnviarMailDAI.Mail(Mensaje);
                         Conexion.Close();
@@ -115,7 +115,7 @@ namespace DatosTrafico
             Logarchivo = "ARS.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("10:00"))
+            if (Val1.Contains("10:15"))
             {
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
@@ -154,7 +154,7 @@ namespace DatosTrafico
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
-                            Mensaje[i] = nombre[i].ToString() + ", " + CRegistro[i].ToString();
+                            Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
                         EnviarMail.Mail(Mensaje);
                         Conexion.Close();
@@ -174,7 +174,7 @@ namespace DatosTrafico
             Logarchivo = "FDT.txt";
             DateTime Val = DateTime.Now;
             string Val1 = Val.ToString("HH:mm");
-            if (Val1.Contains("10:00"))
+            if (Val1.Contains("10:15"))
             {
                 {
                     Conexion.Open();
