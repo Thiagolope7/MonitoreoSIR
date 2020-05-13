@@ -66,7 +66,7 @@ namespace DatosTrafico
                         {
                             Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
-                        EnviarMailDAI.Mail(Mensaje);
+                        EnviarMailDAI.Mail(Mensaje,count);
                         Conexion.Close();
                         return;
                     }
@@ -156,7 +156,7 @@ namespace DatosTrafico
                         {
                             Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
-                        EnviarMail.Mail(Mensaje);
+                        EnviarMail.Mail(Mensaje,count);
                         Conexion.Close();
                         return;
                     }
@@ -217,7 +217,7 @@ namespace DatosTrafico
                             {
                                 Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString()+ "</td></tr>";
                             }
-                            EnviarMailFDT.Mail(Mensaje);
+                            EnviarMailFDT.Mail(Mensaje,count);
                             Conexion.Close();
                             return;
                         }

@@ -7,12 +7,11 @@ namespace DatosTrafico
     class EnviarMailDAI
     {
         public static String Logarchivo;
-        public static void Mail(string[] Mensaje)
+        public static void Mail(string[] Mensaje,int count)
         {
             Logarchivo = "MAIL.txt";
             DateTime TimeMail = DateTime.Now;
             DateTime Timeahora = TimeMail.AddDays(-1);
-            const string Comillas = "\"";
             string TimeMail1 = Timeahora.ToString("yyyy-MM-dd");
             var fromAddress = new MailAddress("diagindra@gmail.com", "Rutina Hermes");
             var toAddress = new MailAddress("santiagolopera13@gmail.com", "Santiago Agudelo");
@@ -20,12 +19,13 @@ namespace DatosTrafico
             string subject = "Hermes | DAI | Menos de 90% de datos en el día " + TimeMail1;
             string body= "<html xmlns= \"http://www.w3.org/1999/xhtml \" lang = \"es\" xml: lang = \"es\" >" +
                            "<head><meta http - equiv = \"Content-Type\" content = \"text/html; charset=UTF-8 \" /></ head ><body> " +
-                          "<h1> Listado de carriles</h1><table border=\"1\" bordercolor=\"666633\" cellpadding=\"2\" cellspacing=\"0\"><tr>" +
+                          "<h1> Listado de carriles</h1><h2>Afectación en " + count + " carriles </h2><table border=\"1\" bordercolor=\"666633\" cellpadding=\"2\" cellspacing=\"0\"><tr>" +
                           "<th scope= \"col\"> Carril </th>" +
                           " <th scope= \"col\">Número de registros </th> " +
                           "</tr> " + string.Join("", Mensaje) + "</table></ body ></ html >";
             MailAddress copyD = new MailAddress("davidmartinez.189@gmail.com", "David Martinez");
             MailAddress copyE = new MailAddress("elmer.aua@gmail.com", "Elmer Usuga");
+            MailAddress copyS = new MailAddress("tecnologiacgm@sier.com.co", "SIER");
             var smtp = new SmtpClient
             {
                 Host = "smtp.gmail.com",
@@ -46,6 +46,7 @@ namespace DatosTrafico
                 {
                     message.CC.Add(copyD);
                     message.CC.Add(copyE);
+                    message.CC.Add(copyS);
                     smtp.Send(message);
                     EscribeLog.escribe(" Se envió mail correctamente con el mensaje -> " + Mensaje + TimeMail1, Logarchivo);
                 }
