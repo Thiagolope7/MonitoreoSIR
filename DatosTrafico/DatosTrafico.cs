@@ -2,7 +2,6 @@
 namespace DatosTrafico
 {
     using System;
-    using System.Data;
     using System.Data.SqlClient;
     using System.Diagnostics;
     using System.Drawing;
@@ -10,14 +9,14 @@ namespace DatosTrafico
 
     public partial class DatosTrafico : Form
     {
-        int val = 0; 
+        int val = 0;
         public static String Logarchivo;
         SqlConnection Conexion = SqlConnect.ConexionSQL();
         public int Cuenta = 10;
         public DatosTrafico()
         {
             InitializeComponent();
-            this.btnProcesos.Enabled = false; 
+            this.btnProcesos.Enabled = false;
         }
         public void CCTV()
         {
@@ -26,7 +25,7 @@ namespace DatosTrafico
             string Val1 = Val.ToString("HH:mm");
             if (Val1.Contains("10:15"))
             {
-                val += 1; 
+                val += 1;
                 Conexion.Open();
                 DateTime Ahora = DateTime.Now;
                 DateTime Ahora1 = Ahora.AddDays(-1);
@@ -35,7 +34,7 @@ namespace DatosTrafico
                                                        " where fecha > '" + AhoraString + " 00:00:00.000' and c_registros <= 1296 and nombre like 'DAI-%' " +
                                                        "order by fecha desc ", Conexion);
                 SqlDataReader leer;
-                int count = 0;               
+                int count = 0;
                 string[] nombre = new string[400];
                 string[] CRegistro = new string[400];
                 leer = da.ExecuteReader();
@@ -61,12 +60,21 @@ namespace DatosTrafico
                         this.lblCCTV.Visible = true;
                         this.lblCCTV.Text = "Warnning";
                         this.lblCCTV.BackColor = Color.Yellow;
+                        string Data;
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
                             Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
-                        EnviarMailDAI.Mail(Mensaje,count);
+                        if (count > 150)
+                        {
+                            Data = "<h2 style = \"color: red; \" > Carriles afectados " + count + "</h2 >";
+                        }
+                        else
+                        {
+                            Data = "<h2 style = \"color: black; \" > Carriles afectados " + count + "</ h2 >";
+                        }
+                        EnviarMailDAI.Mail(Mensaje, Data);
                         Conexion.Close();
                         return;
                     }
@@ -102,13 +110,14 @@ namespace DatosTrafico
                     Cuenta = 10;
                 }
 
-            } else
+            }
+            else
             {
                 System.Threading.Thread.Sleep(60000);
                 val = 0;
             }
 
-            
+
         }
         public void ARS()
         {
@@ -130,7 +139,7 @@ namespace DatosTrafico
                 string[] CRegistro = new string[400];
                 leer = da.ExecuteReader();
                 while (leer.Read() == true)
-                {                  
+                {
                     nombre[count] = leer[1].ToString();
                     CRegistro[count] = leer[2].ToString();
                     count = 1 + count;
@@ -151,12 +160,21 @@ namespace DatosTrafico
                         this.label5.Visible = true;
                         this.label5.BackColor = Color.Yellow;
                         this.label5.Text = "Warnning";
+                        string Data;
                         string[] Mensaje = new string[count];
                         for (int i = 0; i < count; i++)
                         {
                             Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                         }
-                        EnviarMail.Mail(Mensaje,count);
+                        if (count > 150)
+                        {
+                            Data = "<h2 style = \"color: red; \" > Carriles afectados " + count + "</h2 >";
+                        }
+                        else
+                        {
+                            Data = "<h2 style = \"color: black; \" > Carriles afectados " + count + "</ h2 >";
+                        }
+                        EnviarMail.Mail(Mensaje, Data);
                         Conexion.Close();
                         return;
                     }
@@ -212,12 +230,21 @@ namespace DatosTrafico
                             this.label6.Visible = true;
                             this.label6.BackColor = Color.Yellow;
                             this.label6.Text = "Warnning";
+                            string Data;
                             string[] Mensaje = new string[count];
                             for (int i = 0; i < count; i++)
                             {
-                                Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString()+ "</td></tr>";
+                                Mensaje[i] = "<tr><td>" + nombre[i].ToString() + "</td><td  align=\"center\" >" + CRegistro[i].ToString() + "</td></tr>";
                             }
-                            EnviarMailFDT.Mail(Mensaje,count);
+                            if (count > 150)
+                            {
+                                Data = "<h2 style = \"color: red; \" > Carriles afectados " + count + "</h2 >";
+                            }
+                            else
+                            {
+                                Data = "<h2 style = \"color: black; \" > Carriles afectados " + count + "</ h2 >";
+                            }
+                            EnviarMailFDT.Mail(Mensaje, Data);
                             Conexion.Close();
                             return;
                         }
